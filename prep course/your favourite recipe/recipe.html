@@ -2,10 +2,15 @@
 <html>
 <head>
     <title>Assignment 1: Your Favourite Recipe</title>
+    <!--jQuery CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--Local Files-->
+    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
     <div class="content-panel">
+        <button id="text_only">Text only mode</button>
         <div class="header-panel">
             <img src="https://7e57b5357f65827ecdf1-7aaf471cc42ebb2e4de690bf5a9e4b4c.ssl.cf2.rackcdn.com/categoryGroupMain-pizza.jpg">
             <h1>Butter Chicken Pizza</h2>
@@ -14,6 +19,8 @@
             <section id="description">
                 <p>O.k., so maybe that header isn't butter chicken pizza, but it got you hungry, right? And there's nothing quite like butter chicken after a day of fresh powder or, as is often the case, the fresh hell of pure ice (hello rockies!). Butter chicken warms the soul and makes a great hot pack for your sure-to-be-bruised tummy. But what's the best way to get the butter chicken into, as Swede's often say, your mouth hole? <strong>Butter chicken pizza!</strong></p>
                 <p>By the time you're done that last slice, you're not going to want to eat butter chicken any other way.</p>
+                <h4>Go ahead and click those ingredients when you've purchased them and, when you've completed a step, check it off!</h4>
+            </section>
             <section id="ingredients">
                 <h2>Ingredients: What you need</h2>
                 <h3>The Sauce</h3>
@@ -32,7 +39,7 @@
                 </ul>
                 <h3>The Toppings (and one Bottoming)</h3>
                 <ul>
-                    <li>One pizza crust (pre-made or fresh, your call)</li>
+                    <li type="checkbox">One pizza crust (pre-made or fresh, your call)</li>
                     <li>Chicken - breast is best, sliced is nice (pulled is good too but doesn't rhyme)</li>
                     <li>Julienned green onions</li>
                     <li>Sliced red pepper</li>
@@ -41,6 +48,7 @@
                 </ul>
                 <p><em>*Don't worry about the Fenugreek Leaves if you don't have them on hand.</em></p>
                 <img src="https://caef0755630e629e443c-84f2bb9ee9649af836a3bdccd12aed6a.ssl.cf1.rackcdn.com/Butter_Chicken_Pizza_OnWhite_dn.png">
+            </section>
             <section id="directions">
                 <h2>Your steps to great pizza</h2>
                     <ol>
@@ -51,10 +59,18 @@
                         <li>Slice up peppers, onion, and spinach (if you're into it).</li>
                         <li>Sauce, toppings, cheese. Bake for 20-30 at 375 and enjoy!</li>
                     </ol>
+            </section>
         </div>
         <div class="footer-panel">
-                <h3>And, as famous painters say, "It's... </h3>       <img src="http://www.zoom-comics.com/wp-content/uploads/sites/36/2011/01/tmnt-pizza-time.jpg" id="mikey">
+                <h3>And, as famous painters say, "It's... </h3>
+                <img src="http://www.zoom-comics.com/wp-content/uploads/sites/36/2011/01/tmnt-pizza-time.jpg" id="mikey"><br>
         </div>
     </div>
+    <script>
+    $(document).ready(function() {
+        console.log("jQuery successfully loaded.");
+        main();
+    });
+    </script>
 </body>
 </html>
