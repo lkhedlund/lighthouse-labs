@@ -1,0 +1,17 @@
+Assignment 1: FizzBuzz
+Write a program that prints the numbers from 1 to 100. For the multiples of 3, print "Fizz" instead of the number and for the multiples of 5, print "Buzz" instead of the number. For numbers which are multiples of both 3 and 5 print "FizzBuzz"
+Notes:
+	• Write this code using your Sublime Text editor inside your work folder.
+	• Create a directory inside the work folder called something like fizzbuzz
+	• Push your code to GitHub, just like you did previously with the recipe project
+
+Assignment 2: Build a Calculator
+	• Please save your solution into a .rb file in your work directory
+	• While you're allowed and probably tempted to See the Solution before spending any time on the solution yourself, please don't do that.
+
+Assignment 3: Array of string lengths
+	• While you're allowed and probably tempted to See the Solution before spending any time on the solution yourself, please don't do that.
+	• Hint: Consider using the Array#collect (aka Array#map) method for this.
+	• When looking at the documentation for Array#collect, note the difference between the one with and the one without the bang (!) at the end of the method name
+
+Assignment 4: Non-duplicate values in an Array
