@@ -1,19 +1,24 @@
-Level 3
+Level 6
 
-The air feels thicker than before. There must be a horde of sludge.
+The wall behind you feels a bit further away in this room. And you hear more cries for help.
 
-Tip: Be careful not to die! Use warrior.health to keep an eye on your health, and warrior.rest! to earn 10% of max health back.
+Tip: You can walk backward by passing ':backward' as an argument to walk!. Same goes for feel, rescue! and attack!. Archers have a limited attack distance.
 
- ---------
-|@ s ss s>|
- ---------
+ --------
+|C @ S aa|
+ --------
 
   > = Stairs
   @ = Hans (20 HP)
-  s = Sludge (12 HP)
+  C = Captive (1 HP)
+  S = Thick Sludge (24 HP)
+  a = Archer (7 HP)
 
 
 Warrior Abilities:
+
+  warrior.rescue!
+    Rescue a captive from his chains (earning 20 points) in given direction (forward by default).
 
   warrior.health
     Returns an integer representing your health.
