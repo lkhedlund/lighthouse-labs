@@ -16,11 +16,11 @@ class Player
       @direction = :forward
     elsif warrior.feel(@direction).empty?
       # Inner loop is rest, flee, and walk conditions
-      if should_flee?(warrior)
+      if need_rest?(warrior)
+        warrior.rest!
+      elsif should_flee?(warrior)
         @direction = :backward
         warrior.walk!(@direction)
-      elsif need_rest?(warrior)
-        warrior.rest!
       else
         warrior.walk!(@direction)
       end
