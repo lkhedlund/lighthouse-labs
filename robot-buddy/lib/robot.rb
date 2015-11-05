@@ -1,4 +1,9 @@
 class Robot
+  class RobotDeadError < StandardError
+  end
+  class CannotAttackError < StandardError
+  end
+
   attr_reader :position, :items, :items_weight, :capacity, :health
   attr_accessor :equipped_weapon
 
@@ -57,11 +62,19 @@ class Robot
     end
   end
 
+  def heal!(amount)
+    raise RobotDeadError, "The robot is already at 0 health." if health == MIN_HEALTH
+  end
+
   def attack(enemy)
     if equipped_weapon == nil
       enemy.wound(@basic_attack)
     else
       equipped_weapon.hit(enemy)
     end
+  end
+
+  def attack!(enemy)
+    raise CannotAttackError, "You cannot attack a non-robot!" unless enemy.is_a? Robot
   end
 end

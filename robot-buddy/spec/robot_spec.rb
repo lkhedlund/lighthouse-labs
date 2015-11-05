@@ -14,15 +14,12 @@ describe Robot do
     @non_weapon = BoxOfBolts.new
   end
 
-  # The pound symbol is a convention to imply that position is a callable method
-  # This test is basically saying that it expects @robot.position == [0, 0]
   describe "#position" do
     it "starts off at the center of the board, which is 0,0" do
       expect(@robot.position).to be == [0,0]
     end
   end
 
-  # Now let's describe some of the movement methods on the Robot
   describe "movement in 2D space" do
 
     it "has ability to #move_left one tile at a time" do
@@ -64,8 +61,6 @@ describe Robot do
     end
   end
 
-  # Recall that since it is using a "#" in the description,
-  # we are describing/expecting a pick_up instance method
   describe "#pick_up" do
     it "adds item to items" do
       @robot.pick_up(@item1)
@@ -147,7 +142,7 @@ describe Robot do
       @robot.attack(@robot2)
     end
   end
-  
+
   describe "#equipped_weapon" do
     it "should have no equipped_weapon" do
       expect(@robot.equipped_weapon).to be_nil
@@ -161,8 +156,6 @@ describe Robot do
     end
   end
 
-  # Recall that since it is using a "#" in the description,
-  # we are describing/expecting a pick_up instance method
   describe "#pick_up" do
     it "should automatically equip item if it's a weapon of any kind" do
       @robot.pick_up(@weapon)
@@ -174,4 +167,18 @@ describe Robot do
       expect(@robot.equipped_weapon).to be_nil
     end
   end
+
+  describe '#heal!' do
+    it 'should raise an exception if the robot is already at 0 health' do
+      @robot.wound(100)
+      expect{ @robot.heal!(10) }.to raise_error(Robot::RobotDeadError)
+    end
+  end
+
+  describe '#attack!' do
+    it 'should raise an error if the robot is attacking anything other than another robot' do
+      expect{ @robot.attack!(@item1)}.to raise_error(Robot::CannotAttackError)
+    end
+  end
+
 end
