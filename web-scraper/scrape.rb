@@ -1,4 +1,6 @@
 class Scrape
+  class ParsingError < StandardError
+  end
 
   def initialize(site_url)
     @site_url = site_url
@@ -7,17 +9,17 @@ class Scrape
 
   # parses the website into a doc
   def doc
-    Nokogiri::HTML(open(@site_url))
-    # File.open(@site_url) do
-    #   |f| Nokogiri::HTML(f)
-    # end
+    begin
+      doc = Nokogiri::HTML(open(@site_url))
+    rescue Exception => e
+      puts "Could not parse #{@site_url}"
+      puts e
+      exit
+    end
   end
 
   # finds the item id
   def item_id
-    # doc.search('.subtext > a:nth-child(3)').map do |link|
-    #   link['href']
-    # end
     doc.css(".subtext a:nth-child(3)")[0]['href']
   end
 
@@ -43,12 +45,14 @@ class Scrape
     end
   end
 
+  # extracts the time of each comment
   def extract_times
     doc.search('.comhead > a:nth-child(2)').map do |element|
       element.inner_text
     end
   end
 
+  # extract the comment text
   def extract_comments
     doc.search('span.c00').map do |element|
       element.inner_text

@@ -1,13 +1,14 @@
 require 'nokogiri'
 require 'open-uri'
+require 'colorize'
 require_relative 'post'
 require_relative 'comment'
 require_relative 'scrape'
 
 class ScraperApp
-  def initialize(argument)
-    @site_url = argument[0]
-    ARGV.clear
+
+  def initialize
+    @site_url = get_url
   end
 
   def run
@@ -26,7 +27,7 @@ class ScraperApp
   def print_comments
     get_comments
     puts "Number of comments: #{@post.comments.length}"
-    puts "==============Comments=============="
+    puts "==============Comments==============".colorize(:light_yellow)
     @post.comments.each do |detail|
       puts detail.to_s
     end
@@ -38,7 +39,24 @@ class ScraperApp
       @post.add_comment(comment)
     end
   end
+
+  def get_url
+    begin
+      raise ArgumentError, "No URL given" unless ARGV.length == 1
+      @site_url = ARGV[0]
+    rescue ArgumentError => e
+      puts e
+      help
+      exit
+    end
+  end
+
+  def help
+    puts "Please call the app while passing the url as an argument, like so:"
+    puts "ruby scraper_app.rb https://website.com".colorize(:cyan)
+  end
+
 end
 
-new_app = ScraperApp.new(ARGV)
+new_app = ScraperApp.new
 new_app.run

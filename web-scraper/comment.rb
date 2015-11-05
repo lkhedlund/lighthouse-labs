@@ -8,8 +8,9 @@ class Comment
     @comment_text = comment_text
   end
 
+  # Converts the comment text to a string
   def to_s
-    "#{@comment_text}"
+    "#{@comment_text}".colorize(:light_yellow)
   end
 
 end
