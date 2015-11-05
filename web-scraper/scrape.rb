@@ -1,0 +1,55 @@
+class Scrape
+
+  def initialize(site_url)
+    @site_url = site_url
+    @comments_list = []
+  end
+
+  # parses the website into a doc
+  def doc
+    File.open(@site_url) do
+      |f| Nokogiri::HTML(f)
+    end
+  end
+
+  # finds the item id
+  def item_id
+    doc.search('.subtext > a:nth-child(3)').map do |link|
+      link['href']
+    end
+  end
+
+  # finds the post url
+  def url
+    doc.css("td.title a")[0]['href']
+  end
+
+  # find the post's points
+  def points
+    doc.css("span.score").text
+  end
+
+  # find the post's title
+  def title
+    doc.css("title").text
+  end
+
+  # extracts the usernames of commenters
+  def extract_usernames
+    doc.search('.comhead > a:first-child').map do |element|
+      element.inner_text
+    end
+  end
+
+  def extract_times
+    doc.search('.comhead > a:nth-child(2)').map do |element|
+      element.inner_text
+    end
+  end
+
+  def extract_comments
+    doc.search('span.c00').map do |element|
+      element.inner_text
+    end
+  end
+end
