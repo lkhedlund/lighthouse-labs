@@ -1,10 +1,9 @@
 class Item
-  attr_reader :name, :weight, :damage
+  attr_reader :name, :weight
 
-  def initialize(name, weight, damage = nil)
+  def initialize(name, weight)
     @name = name
     @weight = weight
-    @damage = damage
   end
 
 end
