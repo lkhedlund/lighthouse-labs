@@ -9,6 +9,8 @@ class Robot
 
   MAX_HEALTH = 100
   MIN_HEALTH = 0
+  X = 0
+  Y = 1
 
   def initialize
     @position = [0,0]
@@ -21,28 +23,30 @@ class Robot
   end
 
   def move_left
-    position[0] -= 1
+    position[X] -= 1
   end
 
   def move_right
-    position[0] += 1
+    position[X] += 1
   end
 
   def move_up
-    position[1] += 1
+    position[Y] += 1
   end
 
   def move_down
-    position[1] -= 1
+    position[Y] -= 1
   end
 
   def pick_up(item)
     unless items_weight == @capacity
-      if item.is_a? Weapon
-        @equipped_weapon = item
+      @equipped_weapon = item if item.is_a? Weapon
+      if should_feed?(item)
+        item.feed(self)
+      else
+        @items << item
+        @items_weight += item.weight
       end
-      @items << item
-      @items_weight += item.weight
     end
   end
 
@@ -67,14 +71,34 @@ class Robot
   end
 
   def attack(enemy)
-    if equipped_weapon == nil
-      enemy.wound(@basic_attack)
-    else
-      equipped_weapon.hit(enemy)
+    if in_reach?(enemy.position)
+      if equipped_weapon == nil
+        enemy.wound(@basic_attack)
+      else
+        equipped_weapon.hit(enemy)
+      end
     end
   end
 
   def attack!(enemy)
     raise CannotAttackError, "You cannot attack a non-robot!" unless enemy.is_a? Robot
+  end
+
+  private
+
+  def in_reach?(enemy_location)
+    difference?(enemy_location, X) && difference?(enemy_location, Y)
+  end
+
+  def difference?(enemy, coor)
+    (enemy[coor] - self.position[coor]).abs <= 1
+  end
+
+  def should_feed?(item)
+    if item.is_a? BoxOfBolts
+      MAX_HEALTH - health >= item.heal_amount
+    else
+      false
+    end
   end
 end

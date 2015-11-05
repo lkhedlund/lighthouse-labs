@@ -11,7 +11,7 @@ describe Robot do
     @robot2 = Robot.new
     @weapon = PlasmaCannon.new
     @weapon = PlasmaCannon.new
-    @non_weapon = BoxOfBolts.new
+    @box_of_bolts = BoxOfBolts.new
   end
 
   describe "#position" do
@@ -127,9 +127,6 @@ describe Robot do
     it "wounds other robot with weak default attack (5 hitpoints)" do
       robot2 = Robot.new
 
-      # Create an expectation that by the end of this test,
-      # the second robot will have had #wound method called on it
-      # and 5 (the default attack hitpoints) will be passed into that method call
       expect(robot2).to receive(:wound).with(5)
 
       # This is what will trigger the wound to happen on robot2
@@ -140,6 +137,56 @@ describe Robot do
 
       expect(@weapon).to receive(:hit).with(@robot2)
       @robot.attack(@robot2)
+    end
+
+    context "with enemy robot directly above" do
+      before(:each) do
+        @robot2 = Robot.new
+        @robot2.move_up
+      end
+
+      it "is able to successfully wound the enemy" do
+        expect(@robot2).to receive(:wound)
+        @robot.attack(@robot2)
+      end
+    end
+
+    context "with enemy robot two blocks above" do
+      before(:each) do
+        @robot2 = Robot.new
+        @robot2.move_up
+        @robot2.move_up # a second time
+      end
+
+      it "is unable to successfully wound the enemy" do
+        expect(@robot2).not_to receive(:wound)
+        @robot.attack(@robot2)
+      end
+    end
+
+    context "with enemy robot one block below" do
+      before(:each) do
+        @robot2 = Robot.new
+        @robot2.move_down
+      end
+
+      it "is able to successfully wound the enemy" do
+        expect(@robot2).to receive(:wound)
+        @robot.attack(@robot2)
+      end
+    end
+
+    context "with enemy robot two blocks below" do
+      before(:each) do
+        @robot2 = Robot.new
+        @robot2.move_down
+        @robot2.move_down
+      end
+
+      it "is unable to successfully wound the enemy" do
+        expect(@robot2).not_to receive(:wound)
+        @robot.attack(@robot2)
+      end
     end
   end
 
@@ -163,9 +210,22 @@ describe Robot do
     end
 
     it "should not equip the item as a weapon if it's not a weapon (duh!)" do
-      @robot.pick_up(@non_weapon)
+      @robot.pick_up(@box_of_bolts)
       expect(@robot.equipped_weapon).to be_nil
     end
+
+    it "should automatically feed box of bolts if at or below 80hp" do
+      allow(@robot).to receive(:health).and_return(80)
+      expect(@box_of_bolts).to receive(:feed).and_call_original
+      @robot.pick_up(@box_of_bolts)
+    end
+
+    it "should not auto feed box of bolts if above 80hp" do
+      allow(@robot).to receive(:health).and_return(81)
+      expect(@box_of_bolts).not_to receive(:feed)
+      @robot.pick_up(@box_of_bolts)
+    end
+
   end
 
   describe '#heal!' do
