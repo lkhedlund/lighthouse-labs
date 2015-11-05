@@ -12,7 +12,7 @@ class Post
 
   # returns the post's details as an array
   def details
-    [@title, @url, @points, @item_id]
+    ["Post title: #{@title}","URL:  #{@url}","Points: #{@points}", "ID: #{@item_id}"]
   end
 
   # adds a comment object to the comment list

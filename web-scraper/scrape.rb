@@ -7,16 +7,18 @@ class Scrape
 
   # parses the website into a doc
   def doc
-    File.open(@site_url) do
-      |f| Nokogiri::HTML(f)
-    end
+    Nokogiri::HTML(open(@site_url))
+    # File.open(@site_url) do
+    #   |f| Nokogiri::HTML(f)
+    # end
   end
 
   # finds the item id
   def item_id
-    doc.search('.subtext > a:nth-child(3)').map do |link|
-      link['href']
-    end
+    # doc.search('.subtext > a:nth-child(3)').map do |link|
+    #   link['href']
+    # end
+    doc.css(".subtext a:nth-child(3)")[0]['href']
   end
 
   # finds the post url

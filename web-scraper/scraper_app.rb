@@ -1,12 +1,20 @@
-require "nokogiri"
+require 'nokogiri'
+require 'open-uri'
 require_relative 'post'
 require_relative 'comment'
 require_relative 'scrape'
 
 class ScraperApp
-  def initialize(site_url)
-    @scrape = Scrape.new(site_url)
+  def initialize(argument)
+    @site_url = argument[0]
+    ARGV.clear
+  end
+
+  def run
+    @scrape = Scrape.new(@site_url)
     @post = Post.new(@scrape.title, @scrape.url, @scrape.points, @scrape.item_id)
+    print_post
+    print_comments
   end
 
   def print_post
@@ -17,6 +25,8 @@ class ScraperApp
 
   def print_comments
     get_comments
+    puts "Number of comments: #{@post.comments.length}"
+    puts "==============Comments=============="
     @post.comments.each do |detail|
       puts detail.to_s
     end
@@ -30,6 +40,5 @@ class ScraperApp
   end
 end
 
-new_app = ScraperApp.new("post.html")
-new_app.print_post
-new_app.print_comments
+new_app = ScraperApp.new(ARGV)
+new_app.run
