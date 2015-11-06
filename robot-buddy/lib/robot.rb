@@ -5,13 +5,16 @@ class Robot
   end
 
   attr_reader :position, :items, :items_weight, :capacity, :health
-  attr_accessor :equipped_weapon
+  attr_accessor :equipped_weapon, :shields
 
   MAX_HEALTH = 100
-  MIN_HEALTH = 0
+  MAX_SHIELDS = 50
+  EMPTY = 0
   MAX_WEIGHT = 250
   X = 0
   Y = 1
+
+  @@robot_list = 0
 
   def initialize
     @position = [0,0]
@@ -19,6 +22,12 @@ class Robot
     @items_weight = 0
     @health = MAX_HEALTH
     @equipped_weapon = BasicAttack.new
+    @shields = 50
+    @@robot_list += 1
+  end
+
+  def self.robot_list
+    @@robot_list
   end
 
   def move_left
@@ -54,12 +63,11 @@ class Robot
   # end
 
   def wound(amount)
-    # @health = amount > health ? 0 : health - amount
-    # @health = [0, health - amount].max
-    if amount > @health
-      @health = MIN_HEALTH
+    amount_remaining = damage_shields(amount)
+    if amount_remaining > @health
+      @health = EMPTY
     else
-      @health -= amount
+      @health -= amount_remaining
     end
   end
 
@@ -73,7 +81,7 @@ class Robot
   end
 
   def heal!(amount)
-    raise RobotDeadError, "The robot is already at 0 health." if health == MIN_HEALTH
+    raise RobotDeadError, "The robot is already at 0 health." if health == EMPTY
   end
 
   def attack(enemy)
@@ -106,4 +114,16 @@ class Robot
   def can_pick_up?(item)
     item.weight + items_weight <= MAX_WEIGHT
   end
+
+  def damage_shields(damage)
+    if damage >= shields
+      remaining_damage = damage - shields
+      self.shields = EMPTY
+    else
+      self.shields -= damage
+      remaining_damage = 0
+    end
+    remaining_damage
+  end
+
 end

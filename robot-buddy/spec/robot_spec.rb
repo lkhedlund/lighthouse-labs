@@ -13,6 +13,7 @@ describe Robot do
     @weapon = PlasmaCannon.new
     @box_of_bolts = BoxOfBolts.new
     @grenade = Grenade.new
+    @battery = Battery.new
   end
 
   describe "#position" do
@@ -101,7 +102,7 @@ describe Robot do
 
   describe "#wound" do
     it "decreases health" do
-      @robot.wound(20)
+      @robot.wound(70)
       expect(@robot.health).to eq(80)
     end
 
@@ -113,9 +114,9 @@ describe Robot do
 
   describe "#heal" do
     it "increases health" do
-      @robot.wound(40)
+      @robot.wound(100)
       @robot.heal(20)
-      expect(@robot.health).to eq(80)
+      expect(@robot.health).to eq(70)
     end
 
     it "doesn't increase health over 100" do
@@ -269,7 +270,7 @@ describe Robot do
 
   describe '#heal!' do
     it 'should raise an exception if the robot is already at 0 health' do
-      @robot.wound(100)
+      @robot.wound(200)
       expect{ @robot.heal!(10) }.to raise_error(Robot::RobotDeadError)
     end
   end
@@ -277,6 +278,44 @@ describe Robot do
   describe '#attack!' do
     it 'should raise an error if the robot is attacking anything other than another robot' do
       expect{ @robot.attack!(@item1)}.to raise_error(Robot::CannotAttackError)
+    end
+  end
+
+  describe '#shields' do
+    it 'should start off at 50 points' do
+      expect(@robot.shields).to eq(50)
+    end
+
+    it 'when attacked should drain shields before health' do
+      @robot.wound(140)
+      expect(@robot.shields).to eq(0)
+      expect(@robot.health).to eq(10)
+    end
+  end
+
+  describe '#battery' do
+
+    it 'should be a battery' do
+      expect(@battery).to be_a Battery
+    end
+
+    it 'should have the name Battery'do
+      expect(@battery.name).to eq("Battery")
+    end
+
+    it 'should have a weight of 25' do
+      expect(@battery.weight).to eq(25)
+    end
+
+  end
+
+  describe '.robot_list' do
+
+    it 'should keep track of all instantiated robots' do
+      allow(Robot).to receive(:robot_list).and_return(0)
+      robot1 = Robot.new
+      robot2 = Robot.new
+      expect(Robot::robot_list).to_not eq(0)
     end
   end
 
