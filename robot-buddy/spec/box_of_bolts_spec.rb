@@ -6,7 +6,7 @@ describe BoxOfBolts do
   end
 
   it "should be an item" do
-    expect(@bolts).to be_an(Item)
+    expect(@bolts).to be_a HealthItem
   end
 
   it "has name 'Box of bolts'" do

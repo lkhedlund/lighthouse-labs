@@ -1,9 +1,7 @@
-class BoxOfBolts < Item
-  attr_reader :heal_amount
+class BoxOfBolts < HealthItem
 
   def initialize
-    super("Box of bolts", 25)
-    @heal_amount = 20
+    super("Box of bolts", 25, 20)
   end
 
   def feed(robot)

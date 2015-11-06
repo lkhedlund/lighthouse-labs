@@ -14,7 +14,7 @@ class Robot
   X = 0
   Y = 1
 
-  @@robot_list = 0
+  @@robot_list = []
 
   def initialize
     @position = [0,0]
@@ -22,14 +22,21 @@ class Robot
     @health = MAX_HEALTH
     @equipped_weapon = BasicAttack.new
     @shields = 50
-    @@robot_list += 1
+    @@robot_list << self
   end
 
   def self.robot_instances
-    @@robot_list
+    @@robot_list.length
   end
 
   def self.in_position(x, y)
+    robots_in_positon = []
+    @@robot_list.each do |robot|
+      if robot.position == [x,y]
+        robots_in_positon << robot
+      end
+    end
+    robots_in_positon
   end
 
   def move_left
@@ -46,6 +53,16 @@ class Robot
 
   def move_down
     position[Y] -= 1
+  end
+
+  def scan
+    scan = []
+    for i in (-1..1)
+      for j in (-1..1)
+        scan << Robot.in_position(i, j)
+      end
+    end
+    scan.flatten!
   end
 
   def pick_up(item)
@@ -72,6 +89,7 @@ class Robot
     end
   end
 
+  # should look into ways to DRY this up
   def heal(amount)
     if @health + amount > MAX_HEALTH
       @health = MAX_HEALTH
@@ -79,6 +97,15 @@ class Robot
       @health += amount
     end
   end
+
+  def power(amount)
+    if @shields + amount > MAX_SHIELDS
+      @shields = MAX_SHIELDS
+    else
+      @shields += amount
+    end
+  end
+  # DRY_END
 
   def heal!(amount)
     raise RobotDeadError, "The robot is already at 0 health." if health == EMPTY
@@ -106,6 +133,8 @@ class Robot
   def should_feed?(item)
     if item.is_a? BoxOfBolts
       MAX_HEALTH - health >= item.heal_amount
+    elsif item.is_a? Battery
+      MAX_SHIELDS - shields >= item.heal_amount
     else
       false
     end

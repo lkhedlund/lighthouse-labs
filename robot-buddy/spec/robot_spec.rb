@@ -266,6 +266,18 @@ describe Robot do
       @robot.pick_up(@box_of_bolts)
     end
 
+    it "should automatically feed on battery if at or below 25 shields" do
+      allow(@robot).to receive(:shields).and_return(25)
+      expect(@battery).to receive(:feed).and_call_original
+      @robot.pick_up(@battery)
+    end
+
+    it "should not auto feed on battery if above 25 shields" do
+      allow(@robot).to receive(:shields).and_return(26)
+      expect(@battery).not_to receive(:power)
+      @robot.pick_up(@battery)
+    end
+
   end
 
   describe '#heal!' do
@@ -293,23 +305,9 @@ describe Robot do
     end
   end
 
-  describe '#battery' do
-    it 'should be a battery' do
-      expect(@battery).to be_a Battery
-    end
-
-    it 'should have the name Battery'do
-      expect(@battery.name).to eq("Battery")
-    end
-
-    it 'should have a weight of 25' do
-      expect(@battery.weight).to eq(25)
-    end
-  end
-
   describe '.robot_list' do
     it 'should keep track of all instantiated robots' do
-      Robot.class_variable_set :@@robot_list, 0
+      Robot.class_variable_set :@@robot_list, []
       robot1 = Robot.new
       robot2 = Robot.new
       expect(Robot.robot_instances).to eq(2)
@@ -318,7 +316,30 @@ describe Robot do
 
   describe '.in_position(x, y)' do
     it 'should return an array of all robots at those coordinates' do
+      Robot.class_variable_set :@@robot_list, []
+      robot1 = Robot.new
       expect(Robot.in_position(0,0)).to_not be_empty
+    end
+
+    it 'should return an empty array if no robots are at the position' do
+      Robot.class_variable_set :@@robot_list, []
+      robot1 = Robot.new
+      robot1.move_up
+      expect(Robot.in_position(0,0)).to be_empty
+    end
+
+    describe '#scan' do
+      it 'should return the robots in positions around it' do
+        Robot.class_variable_set :@@robot_list, []
+        robot1 = Robot.new
+        robot2 = Robot.new
+        robot1.move_up
+        robot2.move_left
+        robot2.move_left
+        expect(@robot.scan).to_not be_empty
+        expect(@robot.scan).to include(robot1)
+        expect(@robot.scan).to_not include(robot2)
+      end
     end
   end
 
