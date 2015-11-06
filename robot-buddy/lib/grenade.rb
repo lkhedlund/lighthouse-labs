@@ -5,5 +5,7 @@ class Grenade < Weapon
     super("Grenade", 40, 15, 2)
   end
 
-
+  def dispense?
+    true
+  end
 end

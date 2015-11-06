@@ -9,6 +9,7 @@ class Robot
 
   MAX_HEALTH = 100
   MIN_HEALTH = 0
+  MAX_WEIGHT = 250
   X = 0
   Y = 1
 
@@ -16,10 +17,8 @@ class Robot
     @position = [0,0]
     @items = []
     @items_weight = 0
-    @capacity = 250
     @health = MAX_HEALTH
-    @basic_attack = 5
-    @equipped_weapon = nil
+    @equipped_weapon = BasicAttack.new
   end
 
   def move_left
@@ -39,7 +38,7 @@ class Robot
   end
 
   def pick_up(item)
-    unless items_weight == @capacity
+    if can_pick_up?(item)
       @equipped_weapon = item if item.is_a? Weapon
       if should_feed?(item)
         item.feed(self)
@@ -50,7 +49,13 @@ class Robot
     end
   end
 
+  # def items_weight
+  #   items.sum(0){ |sum, item| sum += item.weight }
+  # end
+
   def wound(amount)
+    # @health = amount > health ? 0 : health - amount
+    # @health = [0, health - amount].max
     if amount > @health
       @health = MIN_HEALTH
     else
@@ -59,6 +64,7 @@ class Robot
   end
 
   def heal(amount)
+    # @health = [MAX_HEALTH, health + amount].min
     if @health + amount > MAX_HEALTH
       @health = MAX_HEALTH
     else
@@ -71,13 +77,8 @@ class Robot
   end
 
   def attack(enemy)
-    if in_reach?(enemy.position)
-      if equipped_weapon == nil
-        enemy.wound(@basic_attack)
-      else
-        equipped_weapon.hit(enemy)
-      end
-    end
+    equipped_weapon.hit(enemy) if in_range?(enemy.position)
+    self.equipped_weapon = BasicAttack.new if equipped_weapon.dispense?
   end
 
   def attack!(enemy)
@@ -86,12 +87,12 @@ class Robot
 
   private
 
-  def in_reach?(enemy_location)
+  def in_range?(enemy_location)
     difference?(enemy_location, X) && difference?(enemy_location, Y)
   end
 
   def difference?(enemy, coor)
-    (enemy[coor] - self.position[coor]).abs <= 1
+    (enemy[coor] - self.position[coor]).abs <= equipped_weapon.range
   end
 
   def should_feed?(item)
@@ -100,5 +101,9 @@ class Robot
     else
       false
     end
+  end
+
+  def can_pick_up?(item)
+    item.weight + items_weight <= MAX_WEIGHT
   end
 end

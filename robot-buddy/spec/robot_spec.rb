@@ -209,7 +209,7 @@ describe Robot do
 
         it "should dispense the weapon (can only use once)" do
           @robot.attack(@robot2)
-          expect(@robot.equipped_weapon).to be_nil
+          expect(@robot.equipped_weapon).to be_a BasicAttack
         end
       end
 
@@ -231,7 +231,7 @@ describe Robot do
 
   describe "#equipped_weapon" do
     it "should have no equipped_weapon" do
-      expect(@robot.equipped_weapon).to be_nil
+      expect(@robot.equipped_weapon).to be_a BasicAttack
     end
 
     it "sets equipped weapon" do
@@ -250,7 +250,7 @@ describe Robot do
 
     it "should not equip the item as a weapon if it's not a weapon (duh!)" do
       @robot.pick_up(@box_of_bolts)
-      expect(@robot.equipped_weapon).to be_nil
+      expect(@robot.equipped_weapon).to be_a BasicAttack
     end
 
     it "should automatically feed box of bolts if at or below 80hp" do
