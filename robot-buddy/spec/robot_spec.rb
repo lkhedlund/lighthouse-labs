@@ -294,7 +294,6 @@ describe Robot do
   end
 
   describe '#battery' do
-
     it 'should be a battery' do
       expect(@battery).to be_a Battery
     end
@@ -306,17 +305,22 @@ describe Robot do
     it 'should have a weight of 25' do
       expect(@battery.weight).to eq(25)
     end
-
   end
 
   describe '.robot_list' do
-
     it 'should keep track of all instantiated robots' do
-      allow(Robot).to receive(:robot_list).and_return(0)
+      Robot.class_variable_set :@@robot_list, 0
       robot1 = Robot.new
       robot2 = Robot.new
-      expect(Robot::robot_list).to_not eq(0)
+      expect(Robot.robot_instances).to eq(2)
     end
   end
+
+  describe '.in_position(x, y)' do
+    it 'should return an array of all robots at those coordinates' do
+      expect(Robot.in_position(0,0)).to_not be_empty
+    end
+  end
+
 
 end

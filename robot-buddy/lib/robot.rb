@@ -5,7 +5,7 @@ class Robot
   end
 
   attr_reader :position, :items, :items_weight, :capacity, :health
-  attr_accessor :equipped_weapon, :shields
+  attr_accessor :equipped_weapon, :shields, :robot_array
 
   MAX_HEALTH = 100
   MAX_SHIELDS = 50
@@ -19,15 +19,17 @@ class Robot
   def initialize
     @position = [0,0]
     @items = []
-    @items_weight = 0
     @health = MAX_HEALTH
     @equipped_weapon = BasicAttack.new
     @shields = 50
     @@robot_list += 1
   end
 
-  def self.robot_list
+  def self.robot_instances
     @@robot_list
+  end
+
+  def self.in_position(x, y)
   end
 
   def move_left
@@ -53,14 +55,13 @@ class Robot
         item.feed(self)
       else
         @items << item
-        @items_weight += item.weight
       end
     end
   end
 
-  # def items_weight
-  #   items.sum(0){ |sum, item| sum += item.weight }
-  # end
+  def items_weight
+    items.reduce(0) { |sum, item| sum += item.weight }
+  end
 
   def wound(amount)
     amount_remaining = damage_shields(amount)
@@ -72,7 +73,6 @@ class Robot
   end
 
   def heal(amount)
-    # @health = [MAX_HEALTH, health + amount].min
     if @health + amount > MAX_HEALTH
       @health = MAX_HEALTH
     else
