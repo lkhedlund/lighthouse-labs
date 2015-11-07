@@ -2,11 +2,12 @@
 
 class Post
 
-  def initialize(title, url, points, item_id)
-    @title = title
-    @url = url
-    @points = points
-    @item_id = format_id(item_id)
+  def initialize(site_url)
+    @scrape = Scrape.new(site_url)
+    @title = @scrape.title
+    @url = @scrape.url
+    @points =  @scrape.points
+    @item_id = format_id(@scrape.item_id)
     @comments_list = []
   end
 
@@ -25,12 +26,23 @@ class Post
 
   # returns all the comments associated with a post
   def comments
+    pull_comments
     @comments_list
   end
+
+  private
 
   # Captures just the number from the ID
   def format_id(id)
     /(\d+)/.match(id)
+  end
+
+  # grabs a list of comments to add to the post
+  def pull_comments
+    @scrape.extract_comments.each do |comment_text|
+      comment = Comment.new(comment_text)
+      add_comment(comment)
+    end
   end
 
 end

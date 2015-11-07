@@ -12,7 +12,7 @@ class Scrape
     begin
       doc = Nokogiri::HTML(open(@site_url))
     rescue Exception => e
-      puts "Could not parse #{@site_url}"
+      puts "Could not open #{@site_url} as a URL"
       puts e
       exit
     end
@@ -58,4 +58,6 @@ class Scrape
       element.inner_text
     end
   end
+
+
 end
