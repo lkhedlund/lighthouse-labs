@@ -76,4 +76,30 @@ describe Student do
       expect(@student).to_not be_valid
     end
   end
+  context 'callbacks' do
+    before(:each) do
+      @student = Student.new
+      @student.assign_attributes(
+        first_name: 'Jim',
+        last_name: 'Darkmagic',
+        birthday: Date.new(1987, 1, 10),
+        gender: 'male',
+        email: 'dark@magic.com',
+        phone: '555-6666'
+      )
+      @teacher = Teacher.new
+      @teacher.assign_attributes(
+        name: "Willy Wonka",
+        email: "wonka@college.ca",
+        address: "Blackfoot Trail",
+        phone: "200-0012"
+      )
+    end
+
+    it "should update last_student_added_at to today's date if a student was created today" do
+      @student.teacher = @teacher
+      @student.save!
+      expect(@teacher.last_student_added_at).to eq(Date.today)
+    end
+  end
 end
