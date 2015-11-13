@@ -27,7 +27,7 @@ You probably remember how to associate tables in a database using foreign keys. 
 
 ## What are Migrations?
 
-Migrations are ActiveRecord's way for allowing us to modify the database structure using ruby code. 
+Migrations are ActiveRecord's way for allowing us to modify the database structure using ruby code.
 
 Instead of creating a table manually using a SQL query like this...
 
@@ -85,7 +85,7 @@ Once you implement it, run `rake db:migrate` to run the migration against the da
 
 #### Step 3 - Make sure the tests pass
 
-We wrote a test case that checks if you created the students table: `spec/migrate_create_table_spec.rb`. 
+We wrote a test case that checks if you created the students table: `spec/migrate_create_table_spec.rb`.
 
 To set up the database for the test environment run:
 
@@ -141,17 +141,17 @@ Students need teachers. So let's introduce teachers to the app.
 
 Create a `Teacher` model that extends `ActiveRecord::Base`. This model should be created in its own Ruby file and in the right folder (`app/models`). Then you'll need to require it in `app_config.rb` so that it's available to the other files in the project.
 
-You'll also need to create (`touch`) a new migration file in `db/migrate` to create the teachers table. 
+You'll also need to create (`touch`) a new migration file in `db/migrate` to create the teachers table.
 
 The teachers migration file name must start with a bunch of numbers that represent the exact timestamp of when you created the migration. The students migration file is called `20140319144238_create_students.rb`. This means the migration was created on March 3rd, 2014 at 14:42:38. Precede the migration file you are about to create with a timestamp for the current date and time.
 
-We want to store the following information about a teacher:  `name`, `email`, `address`, and `phone`. 
+We want to store the following information about a teacher:  `name`, `email`, `address`, and `phone`.
 
 ### 5. Insert sample Teacher data
 
 Without resorting to using SQL or SQLite, write some Ruby code that uses __ActiveRecord commands__ to create some test data. Create 9 teachers, each with unique names and email addresses.
 
-While you're at it, please ensure that no 2 teachers can share the same email address using an ActiveRecord validation. 
+While you're at it, please ensure that no 2 teachers can share the same email address using an ActiveRecord validation.
 
 The student data is imported using a class we wrote called StudentsImporter in `lib/students_importer.rb`. To create the 9 teachers, create your own TeachersImporter class in `lib/teachers_importer.rb`.
 
@@ -165,7 +165,7 @@ Implement a CSV-based mechanism for loading the sample teachers much like how `s
 
 ### 6. Create a One-to-Many association between Teachers and Students
 
-At this point you should have students and teachers in the database. 
+At this point you should have students and teachers in the database.
 
 Let's say that we need each student to have a teacher, and each teacher to have many students. Does your Teacher model need to change? How about your Student model? Do you need a migration?
 
@@ -195,4 +195,4 @@ RSpec Tip: the `be_valid` method expects that calling `.valid?` on the ActiveRec
 
 #### Bonus
 
-Write a `teacher_spec.rb` file to validate your Teacher model's validations. 
+Write a `teacher_spec.rb` file to validate your Teacher model's validations.
