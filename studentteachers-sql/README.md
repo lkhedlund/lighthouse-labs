@@ -196,3 +196,74 @@ RSpec Tip: the `be_valid` method expects that calling `.valid?` on the ActiveRec
 #### Bonus
 
 Write a `teacher_spec.rb` file to validate your Teacher model's validations.
+
+# Version 2
+
+###Active Record Callbacks
+We're going to step up the Students & Teachers exercise up another notch by introducing an important concept within Active Record, namely callbacks. Callbacks are methods that can be triggered by various events occurring with a record. These events include (but are not limited to):
+
+create
+save
+update
+destroy
+validate
+To read more about Active Record callbacks, check out http://edgeguides.rubyonrails.org/active_record_callbacks.html.
+
+###Feature: New student tasks
+Each time a student is added to a teacher's class, the teacher has to complete certain administrative tasks within the week. Currently there is nothing in the system that would allow a teacher to know the date of the last addition of a student to their class.
+
+Add a migration that adds a date field named last_student_added_at to the teachers table. This will be updated any time a student is added to a teacher's class.
+
+Next, add an after_save callback on the Student model that only fires if the student has a teacher. Read up on conditional callbacks here: http://guides.rubyonrails.org/active_record_callbacks.html#conditional-callbacks. You can add if: :teacher to the end of the line of code that registers the callback and then the callback will only get called if the student has a teacher assigned.
+
+Inside the callback, set the last_student_added_at field on the student's teacher to today's date and save the teacher.
+
+Write a test that sets a student's teacher and checks to see whether the teacher's last_student_added_at date has been saved to the database as today's date. You may need to reload the teacher from the database to make sure that it saved.
+
+###Feature: Teacher employment
+We are now collecting more information about teachers. Create a new migration file to add hire_date and retirement_date columns to the teachers table.
+
+Although these fields are not mandatory, we still need to write a validation. Create a custom validation that ensures that the retirement_date is after the hire_date. It wouldn't make sense for them to be the other way around.
+
+If a Teacher is being validated and both dates are present and their retirement_date is before their hire_date then you should add an error to :retirement_date indicating that it has to be after the hire_date.
+
+Additionally, validate that retirement_date is less than or equal to today. Retirement dates can't be set to future dates.
+
+Tip: Check for the presence of the dates by seeing whether they're truthy. E.g.: if hire_date && retirement_date
+
+###Retired teachers don't teach!
+
+Now that teachers can retire, we need to make sure that they don't have students assigned after their retirement date has been set.
+
+Add a callback that fires after a teacher is saved that checks to see whether their retirement date has been set. If it has, then any students who currently have that teacher should have their teacher_id column set to nil.
+
+You'll also need to add a validation to students that prevents them from being assigned to a retired teacher.
+
+###Bonus: Teacher seniority
+
+Write a #days_employed method on Teacher that returns the difference between their hire_date and retirement_date. If they haven't retired yet, return the difference between their hire_date and today.
+
+#Version 3
+
+###Uh-oh! The requirements have changed
+The customer for whom you're building this system just changed her mind. It turns out that the system needs to support the notion that a student can have more than one teacher.
+
+Make the necessary changes to your models (along with any necessary migrations) to support this.
+
+##Bonus
+
+Write tests to ensure that your association is working correctly. For example, given a student, can you find her teachers? Can you find all students for a given teacher?
+
+###Feature: Teacher rating
+Create a new migration. The Teacher model should get a new field: rating.
+
+It is up to you whether you want to store rating as an int or a decimal. It should represent the average rating for that teacher from all students.
+
+You need to store a feedback column that will contain each Student's rating for their teacher(s). Where does this go? What type should it be?
+
+When the feedback field is set on a student record, it should trigger an update to the teacher records. Some questions you want to ask yourself at this point:
+
+Which model should the method be on?
+Should it recalculate the average?
+What event on the model will trigger this callback?
+Given that there is now a many-to-many relationship with the Teacher model, will this rating be applied to ALL of the student's teachers? (Hint: Yes.)
