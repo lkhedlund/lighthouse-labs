@@ -2,8 +2,10 @@ class Student < ActiveRecord::Base
   # implement your Student model here
   belongs_to :teacher
 
-  validates :email, uniqueness: true
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates :email,
+    uniqueness: true,
+    format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
+    
   validate :cannot_be_too_young
 
   after_save :student_added, if: :teacher

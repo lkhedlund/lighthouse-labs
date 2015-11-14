@@ -5,27 +5,26 @@ describe Teacher do
     raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:teachers)
   end
 
-  context '#name and #age' do
-    before(:each) do
-      @teacher = Teacher.new
-      @teacher.assign_attributes(
-        name: 'Gumpy Gilmore',
-        email: 'gilmore@college.ca',
-        address: 'Blackfoot Trail',
-        phone: "200-0010"
-      )
-    end
-  end
-
   context 'validations' do
-    before(:each) do
-      @teacher = Teacher.new
-      @teacher.assign_attributes(
-        name: 'Sally Shawn',
-        email: 'shawn@college.ca',
-        phone: '200-0011'
-      )
-    end
+      before(:each) do
+        @teacher = Teacher.new
+        @teacher.assign_attributes(
+          name: "Willy Wonka",
+          email: "wonka@college.ca",
+          address: "Blackfoot Trail",
+          phone: "200-0012"
+        )
+        @student = Student.new
+        @student.assign_attributes(
+          first_name: 'Jim',
+          last_name: 'Darkmagic',
+          birthday: Date.new(1987, 1, 10),
+          gender: 'male',
+          email: 'dark@magic.com',
+          phone: '555-6666',
+          teacher_id: 1
+        )
+      end
 
     it 'should accept valid info' do
       expect(@teacher).to be_valid
@@ -39,34 +38,28 @@ describe Teacher do
       expect(@teacher).to_not be_valid
     end
 
-    context 'callbacks' do
-      before(:each) do
-        @student = Student.new
-        @student.assign_attributes(
-          first_name: 'Jim',
-          last_name: 'Darkmagic',
-          birthday: Date.new(1987, 1, 10),
-          gender: 'male',
-          email: 'dark@magic.com',
-          phone: '555-6666'
-        )
-        @teacher = Teacher.new
-        @teacher.assign_attributes(
-          name: "Willy Wonka",
-          email: "wonka@college.ca",
-          address: "Blackfoot Trail",
-          phone: "200-0012"
-        )
-      end
+    it "should not accept a hired date after retirement date" do
+      @teacher.hire_date = 2.days.ago
+      @teacher.retirement_date = 3.days.ago
+      expect(@teacher).to_not be_valid
+    end
 
-      it "should remove all students if the teacher is retired" do
-        @student.teacher = @teacher
-        @student.save
-        @teacher.assign_attributes(retirement_date: Date.today)
-        @teacher.save
-        puts @student.inspect, @teacher.inspect
-        expect(@student.teacher_id).to eq(nil)
-      end
+    it "should accept a retirement date after a hire date" do
+      @teacher.hire_date = 3.days.ago
+      @teacher.retirement_date = 2.days.ago
+      expect(@teacher).to be_valid
+    end
+
+    it "should not let a teacher retire in the future" do
+      @teacher.retirement_date = 3.days.from_now
+      expect(@teacher).to_not be_valid
+    end
+
+    it "should set all students teachers to nil after retirement" do
+      @teacher.assign_attributes(retirement_date: Date.today)
+      @teacher.save
+      @student.reload
+      expect(@student.teacher_id).to eq(nil)
     end
   end
 end
