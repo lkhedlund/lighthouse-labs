@@ -1,15 +1,29 @@
+<h1>Post a Message</h1>
+<hr/>
+
+<% if @message.errors.any? %>
+  <div>
+    <strong>There was an error in posting your message</strong>
+    <ul>
+      <% @message.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <form method="post" action="/messages">
   <div>
     <label>Author:</label>
-    <input type="text" name="author">
+    <input type="text" name="author" value="<%= @message.author %>">
   </div>
   <div>
     <label>Subject:</label>
-    <input type="text" name = "title">
+    <input type="text" name = "title" value="<%= @message.title %>">
   </div>
   <div>
     <label>Content:</label>
-    <input type="text" name="content">
+    <input type="text" name="content" value="<%=  @message.content %>">
   </div>
   <div>
     <input type="submit" value="Submit">
