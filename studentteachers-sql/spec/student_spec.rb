@@ -98,7 +98,7 @@ describe Student do
 
     it "should update last_student_added_at to today's date if a student was created today" do
       @student.teacher = @teacher
-      @student.save!
+      @student.save
       expect(@teacher.last_student_added_at).to eq(Date.today)
     end
   end

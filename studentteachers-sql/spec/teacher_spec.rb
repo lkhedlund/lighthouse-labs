@@ -38,5 +38,35 @@ describe Teacher do
       )
       expect(@teacher).to_not be_valid
     end
+
+    context 'callbacks' do
+      before(:each) do
+        @student = Student.new
+        @student.assign_attributes(
+          first_name: 'Jim',
+          last_name: 'Darkmagic',
+          birthday: Date.new(1987, 1, 10),
+          gender: 'male',
+          email: 'dark@magic.com',
+          phone: '555-6666'
+        )
+        @teacher = Teacher.new
+        @teacher.assign_attributes(
+          name: "Willy Wonka",
+          email: "wonka@college.ca",
+          address: "Blackfoot Trail",
+          phone: "200-0012"
+        )
+      end
+
+      it "should remove all students if the teacher is retired" do
+        @student.teacher = @teacher
+        @student.save
+        @teacher.assign_attributes(retirement_date: Date.today)
+        @teacher.save
+        puts @student.inspect, @teacher.inspect
+        expect(@student.teacher_id).to eq(nil)
+      end
+    end
   end
 end

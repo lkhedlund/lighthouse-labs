@@ -1,6 +1,3 @@
-Week 3 Day 4 - Assignment
-===========================
-
 # ActiveRecord Students & Teachers
 
 ## Introduction
