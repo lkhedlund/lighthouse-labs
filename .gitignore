@@ -1,0 +1,8 @@
+sinatra_skeleton/.env
+sinatra_skeleton/.bundle
+sinatra_skeleton/db/*.db
+sinatra_skeleton/db/*.sqlite3
+sinatra_skeleton/db/*.sqlite
+sinatra_skeleton/db/*.sqlite3-journal
+sinatra_skeleton/.DS_Store
+sinatra_skeleton/public/assets
