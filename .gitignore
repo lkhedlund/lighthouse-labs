@@ -6,3 +6,4 @@ sinatra_skeleton/db/*.sqlite
 sinatra_skeleton/db/*.sqlite3-journal
 sinatra_skeleton/.DS_Store
 sinatra_skeleton/public/assets
+django_tutotial/__pycache__/*
