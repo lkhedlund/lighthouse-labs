@@ -6,10 +6,33 @@
     <script src="js/betting_game.js"></script>
   </head>
   <body>
+    <h1>Welcome to the betting game!</h1>
+    <p>
+      Pick a betting amount:
+    </p>
+    <div class="card-container">
+      <div class="card-inner">
+        <h2 id="question">
+          <!--The question will load here -->
+        </h2>
+        <div id="options">
+          <!-- the choices will load here -->
+        </div>
+      </div>
+      <div class="card-navigate">
+        <!-- <button id="skip">Skip</button> -->
+        <!-- <button id="restart">Restart</button> -->
+        <button id="submit">Submit</button>
+      </div>
+    </div>
+    </div>
 
     <script>
       $(document).ready(function() {
         BettingGame.run();
+        $('#submit').on('click', function() {
+          BettingGame.place_bet(this.id);
+        });
       });
     </script>
   </body>
