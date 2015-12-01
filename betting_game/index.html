@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/betting_game.js"></script>
   </head>
   <body>
-    <h1>Welcome to the betting game!</h1>
-    <p>
-      Pick a betting amount:
-    </p>
-    <div class="card-container">
-      <div class="card-inner">
-        <h2 id="question">
+    <div class="content-panel">
+      <div class="header-panel">
+        <div id="cartridge">
+          <img src="images/title.png" style="width: 100%;">
+        </div>
+      </div>
+      <div class="body-panel">
+        <div id="question">
           <!--The question will load here -->
-        </h2>
+        </div>
         <div id="options">
           <!-- the choices will load here -->
         </div>
       </div>
-      <div class="card-navigate">
-        <!-- <button id="skip">Skip</button> -->
-        <!-- <button id="restart">Restart</button> -->
-        <button id="submit">Submit</button>
+      <div class="navigate-panel">
       </div>
     </div>
-    </div>
-
     <script>
       $(document).ready(function() {
         BettingGame.run();
-        $('#submit').on('click', function() {
-          BettingGame.place_bet(this.id);
+        $('#start').on('click', function() {
+          $('#cartridge').fadeOut('slow', function(){
+            var new_screen = $("<div id='cartridge'></div>");
+            $(this).replaceWith(new_screen);
+            $('#cartridge').fadeIn("slow");
+          });
         });
       });
     </script>

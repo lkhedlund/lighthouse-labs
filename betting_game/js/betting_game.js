@@ -9,8 +9,10 @@ var BettingGame = BettingGame || {};
 BettingGame.run = function() {
   BettingGame.refresh();
 
-  var $display_bankroll = $('#question');
-  $display_bankroll.append("Your current bankroll is " + bankroll);
+  // var $display_bankroll = $('#question');
+  // $display_bankroll.append("BANKROLL " + bankroll);
+  var button = $('<div id="start">START</div>');
+  $(".navigate-panel").append(button);
 };
 
 BettingGame.refresh = function() {
