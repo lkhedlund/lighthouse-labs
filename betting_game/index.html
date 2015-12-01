@@ -10,15 +10,6 @@
     <div class="content-panel">
       <div class="header-panel">
         <div id="cartridge">
-          <img src="images/title.png" style="width: 100%;">
-        </div>
-      </div>
-      <div class="body-panel">
-        <div id="question">
-          <!--The question will load here -->
-        </div>
-        <div id="options">
-          <!-- the choices will load here -->
         </div>
       </div>
       <div class="navigate-panel">
@@ -28,11 +19,7 @@
       $(document).ready(function() {
         BettingGame.run();
         $('#start').on('click', function() {
-          $('#cartridge').fadeOut('slow', function(){
-            var new_screen = $("<div id='cartridge'></div>");
-            $(this).replaceWith(new_screen);
-            $('#cartridge').fadeIn("slow");
-          });
+          BettingGame.start_game();
         });
       });
     </script>

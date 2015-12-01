@@ -11,8 +11,22 @@ BettingGame.run = function() {
 
   // var $display_bankroll = $('#question');
   // $display_bankroll.append("BANKROLL " + bankroll);
+  var start_screen = $('<img src="images/title.png" style="width: 100%;">');
+  $("#cartridge").append(start_screen);
   var button = $('<div id="start">START</div>');
   $(".navigate-panel").append(button);
+};
+
+BettingGame.start_game = function() {
+  var computer = $('<div class="top-l"></div>'),
+    actions = $('<div class="top-r"></div>'),
+    betting = $('<div class="bottom-r"></div>'),
+    options = $('<div class="bottom-l"></div>'),
+    new_screen = $("<div id='cartridge'></div>");
+  $('#cartridge').fadeOut('slow', function() {
+    $(this).replaceWith(new_screen);
+    $('#cartridge').fadeIn("slow");
+  });
 };
 
 BettingGame.refresh = function() {
