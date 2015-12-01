@@ -1,16 +1,11 @@
 // JS Betting game
 RANDOM_CAP = 10;
 bankroll = 40
+bet = 0
 
 var BettingGame = BettingGame || {};
 
-// BettingGame.init = function() {};
-
 BettingGame.run = function() {
-  BettingGame.refresh();
-
-  // var $display_bankroll = $('#question');
-  // $display_bankroll.append("BANKROLL " + bankroll);
   var start_screen = $('<img src="images/title.png" style="width: 100%;">');
   $("#cartridge").append(start_screen);
   var button = $('<div id="start">START</div>');
@@ -18,29 +13,30 @@ BettingGame.run = function() {
 };
 
 BettingGame.start_game = function() {
-  var computer = $('<div class="top-l"></div>'),
-    actions = $('<div class="top-r"></div>'),
-    betting = $('<div class="bottom-r"></div>'),
-    options = $('<div class="bottom-l"></div>'),
+  var computer = $('<div class="top-l">COMP:</div>'),
+    actions = $('<div class="top-r">\
+      <div id="increase">BET+</div>\
+      <div id="decrease">BET-</div>\
+      </div>'),
+    betting = $('<div class="bottom-l"><p id="start">RED GOD</p></div>'),
+    options = $('<div class="bottom-r">\
+      <br><div id="quit">QUIT</div>\
+      </div>'),
     new_screen = $("<div id='cartridge'></div>");
+  $('#start').fadeOut('slow');
   $('#cartridge').fadeOut('slow', function() {
     $(this).replaceWith(new_screen);
-    $('#cartridge').fadeIn("slow");
+    $('#cartridge').fadeIn("fast");
+    $('#cartridge').append(computer, actions, betting, options);
+    $('.bottom-l').prepend("<p>MONEY: $" + bankroll + "</p>");
+    $('.bottom-r').prepend("<p>BET: $" + bet + "</p>");
   });
 };
 
-BettingGame.refresh = function() {
-  $('#question').html('');
+BettingGame.place_bet = function() {
 };
 
-BettingGame.place_bet = function(id_val) {
-  var $submit = $('#submit');
-
-  if (id_val == 'submit') {
-    do {
-      var bet = parseInt(prompt('Bet $5 or $10? '), 10);
-    } while ((bet != 5) && (bet != 10));
-
+BettingGame.check_answer = function() {
     var rand_num = Math.floor(Math.random() * (RANDOM_CAP + 1));
     console.log("DEBUG:" + rand_num);
     var guess = prompt("Please choose a number between 1 and 10");
@@ -50,6 +46,4 @@ BettingGame.place_bet = function(id_val) {
       bankroll -= bet;
     };
     BettingGame.run();
-  };
-
-};
+}

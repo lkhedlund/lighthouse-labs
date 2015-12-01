@@ -21,6 +21,9 @@
         $('#start').on('click', function() {
           BettingGame.start_game();
         });
+        $('#increase', '#decrease').on('click', function() {
+          BettingGame.place_bet();
+        });
       });
     </script>
   </body>
