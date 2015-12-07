@@ -33,3 +33,6 @@ var/
 
 # Database
 *.sqlite3
+
+# Node modules
+node_learn_you/node_modules/
