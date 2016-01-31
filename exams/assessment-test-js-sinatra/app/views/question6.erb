@@ -1,0 +1,98 @@
+<style>
+  label {
+    display: inline-block;
+    width: 130px;
+  }
+
+  input[type="text"] {
+    width: 350px;
+    height: 30px;
+    line-height: 27px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    padding: 0 5px;
+    margin: 5px 0;
+  }
+
+  input[type="submit"] {
+    background-color: #08c;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: white;
+    font-size: 1em;
+  }
+
+  input[type="text"].incorrect {
+    border: 3px solid red;
+  }
+
+  /**** YOU MAY ADD OR MODIFY CSS BELOW ****/
+
+  /**** STOP MODIFYING HERE. ****/
+</style>
+
+<p>Validate the form according to the following criteria. It should not submit if all of the following criteria are not met. If at least one of the criteria is not met, an alert should pop up listing all the things that are wrong with the form.</p>
+<p><strong>BONUS: (10 pts) </strong> In addition to having it alert the user, change the display of the boxes that are not correct. See <a href="http://getbootstrap.com/css/#forms-control-validation" target="_blank">how Bootstrap does it</a> as an example.</p>
+<hr>
+<h4>RULES:</h4>
+<ul>
+  <li>The name field should be at least five characters long.</li>
+  <li>The e-mail field should at least contain an '@' symbol.</li>
+  <li>The phone number field should have at least seven digits in it.</li>
+  <li>The state/province field should be two uppercase letters.</li>
+</ul>
+<p>Edit the page source to begin.</p>
+
+<div class="question">
+  <form id="theForm">
+    <label for="name">Name: </label>
+    <input type="text" name="name" id="name" placeholder="Enter name..."><br>
+
+    <label for="email">E-Mail: </label>
+    <input type="text" name="email" id="email" placeholder="Enter e-mail..."><br>
+
+    <label for="phone">Phone: </label>
+    <input type="text" name="phone" id="phone" placeholder="Enter phone..."><br>
+
+    <label for="state">State/Province: </label>
+    <input type="text" name="state" id="state" placeholder="Enter state or province..."><br>
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<script>
+
+  $(function() {
+    /**** YOU MAY MODIFY THE CODE BELOW ****/
+    $('input:submit').on('click', function() {
+      errors = [];
+      var name = $('input#name:text').val();
+      var email = $('input#email:text').val();
+      var phone = $('input#phone:text').val();
+      var state = $('input#state:text').val();
+
+      isValid(name, /^\w{5,}$/, "Name too short");
+      isValid(email, /(?=.*@)/, "Invalid email");
+      isValid(phone, /^\d{7,}$/, "Phone too short");
+      isValid(state, /(?=.*[A-Z]{2,})/, "State invalid");
+      alert(errors);
+      if (errors.length > 0) {
+        return false;
+      }
+    });
+
+    function isValid(input_value, regex, error) {
+      if (input_value.match(regex)) {
+        return true;
+      } else {
+        errors.push(error);
+        input_value.addClass('incorrect');
+        return false;
+      }
+    }
+    /**** STOP MODIFYING HERE. ****/
+  });
+
+</script>

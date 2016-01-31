@@ -1,0 +1,63 @@
+
+body, html {margin: 0; padding: 0; background: #fff; color: #333; font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-height: 22px; }
+a { color: #2A964C; border-bottom: 1px solid #2A964C; text-decoration: none; }
+a:hover { color: #B13838; border-bottom: 1px solid #B13838; }
+h1 { line-height: 40px; font-size: 30px; text-align: center; }
+h2 { line-height: 30px; font-size: 20px; padding: 0; margin: 0; }
+h1, h2 { color: #000; font-family: "Ubuntu", sans-serif; }
+#container { margin: 25px auto; width: 600px; padding-top: 70px; background: url(logo.png) top center no-repeat; background-size: 213px 59px; }
+#content img { height: 80px; margin-right: 10px; margin-bottom: 10px; border: 2px solid #043a6b; padding: 2px; }
+#content img:hover { border: 2px solid #fff; }
+pre { background: rgba(255,255,255,0.6); padding: 10px; color: #012647; }
+
+#test-results { width: 600px; margin: 0 auto; }
+.result { padding: 5px 10px;  }
+.result.fail { background: #f77; }
+.result.fail a { color: #400; border-bottom: 1px solid #400; }
+.result.fail a:hover { color: #700; border-bottom: 1px solid #700; }
+.result.success { background: #7f7; }
+
+.question { background: rgba(0,0,0,0.05); padding: 10px; margin: 5px 0; }
+
+#container .navigator {
+  border-bottom: 1px solid #aaa;
+  overflow: auto;
+  position: relative;
+}
+
+#container .navigator a {
+  display: inline-block;
+}
+
+
+#container .navigator a.back {
+  float: left;
+}
+#container .navigator a.back:before {
+  content: "\2190";
+  margin: 0 5px;
+}
+
+#container .navigator a.fwd:after {
+  content: "\2192";
+  margin: 0 5px;
+}
+
+
+#container .navigator a.fwd {
+  float: right;
+}
+
+#container .navigator .list {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  margin-left: -50px;
+  top: 0; left: 50%;
+  position: absolute;
+}
+
+body {
+  padding-bottom: 40px;
+}
+

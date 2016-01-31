@@ -1,0 +1,34 @@
+<p>Write a function called <code>findLongestWord</code> that takes in an array of words, and returns the longest one. If there are more than one words that are the largest, returning any of them is fine.</p>
+<p>Once you have written the correct solution in the dedicated area, the failing tests below will succeed.</p>
+
+<p>Edit the the page source to begin.</p>
+
+<script>
+
+  function findLongestWord(words) {
+    /**** YOU MAY MODIFY THE CODE BELOW ****/
+    var longest_word = [""]
+    for (var i = 0; i <= words.length-1; i++) {
+      if (words[i].length > longest_word[0].length) {
+        longest_word[0] = words[i];
+      }
+    }
+    // console.log(longest_word);
+    return longest_word;
+    /**** STOP MODIFYING HERE. ****/
+  }
+
+  /*
+    NOTE:
+    The code below is for you and us to verify that your function is working correctly.
+    It's what makes the red/pink boxes on the page. The goal is to make them green by making the
+    assertion pass. Please do not modify the code below.
+  */
+  $(function() {
+    assert(findLongestWord(['cleopatra', 'ceasar', 'idefix']) == 'cleopatra');
+    assert(findLongestWord(['tintin', 'haddock', 'castafiore']) == 'castafiore');
+    assert(findLongestWord(['a']) == 'a');
+    assert(findLongestWord(['this', 'test', 'seems', 'extremely', 'silly', 'but', 'isnt']) == 'extremely');
+  });
+
+</script>

@@ -1,0 +1,52 @@
+<style>
+  /**** YOU MAY ADD OR MODIFY CSS BELOW ****/
+
+  #red-box {
+    height: 100px;
+    width: 100px;
+    background: red;
+    transition: all 2s linear;
+  }
+
+  #red-box.circle {
+    margin-left: 300px;
+    margin-top: 15px;
+    border-radius: 50%;
+  }
+
+  #red-box.color {
+    background-color: blue;
+  }
+
+  /**** STOP MODIFYING HERE. ****/
+</style>
+
+<p>Make the red box such that when it is clicked, it moves 300 pixels to the right and 15 pixels down, and slowly turns into a circle, over the course of 2 seconds.</p>
+<p>Then, 1 second after the animation is done running (so 3 seconds after the box is clicked), make the red circle go back to its original position, and make it turn blue. Once again the circle should be animating over a course of 2 seconds.</p>
+<p> While this can be done with jQuery's animation capabilities, for simple transitions such as this, we should use <a href="http://www.css3.info/preview/css3-transitions/">CSS3 transitions</a>. To that end, <strong>make sure to use CSS3 transitions</strong> to achieve this. Yes, you will still need to write some JS/jQuery since clicking the red box needs to trigger the CSS3 transition.</p>
+
+<p>Edit the page source to begin.</p>
+
+<!-- You shouldn't (need to) modify this question div or its contents -->
+<div class="question">
+  <h2>Red Box</h2>
+  <div id="red-box"></div>
+</div>
+
+<script>
+
+  $(function() {
+    /**** YOU MAY ADD OR MODIFY CODE BELOW ****/
+    $('#red-box').on('click', function() {
+      var $box = $(this);
+      $box.addClass('circle');
+      setTimeout(function() {
+        $box.removeClass('circle');
+        $box.addClass('color');
+      }, 3000);
+});
+
+    /**** STOP MODIFYING HERE. ****/
+  });
+
+</script>

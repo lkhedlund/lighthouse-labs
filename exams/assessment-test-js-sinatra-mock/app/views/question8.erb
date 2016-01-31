@@ -1,0 +1,46 @@
+<style>
+
+	/**** YOU MAY ADD OR MODIFY CSS BELOW ****/
+
+	/**** STOP MODIFYING HERE. ****/
+
+</style>
+
+<p>The form below is a password box, that requires you to select a Strong Password. For the purposes of this test, a strong password has the following rules:
+	<ul>
+		<li>At least one capital letter</li>
+		<li>At least one lower case letter</li>
+		<li>At least one number</li>
+	</ul>
+</p>
+<p>Write code to validate the form. If the text in the box does not meet the criteria, the form should <strong>NOT</strong> submit, and an alert should pop up telling the user their password is not strong enough.</p>
+
+<div class="question">
+	<form>
+		<label class="pw">Create a strong password:</label><br>
+		<input type="text" id="pwBox" name="password" placeholder="Password..."><br>
+		<input type="submit" value="Create Password">
+	</form>
+</div>
+
+<script>
+	$(function() {
+		/**** YOU MAY MODIFY THE CODE BELOW ****/
+		$('input:submit').on('click', function() {
+			var password = $('input#pwBox:text').val();
+			if (notStrong(password)) {
+				return false;
+			};
+		});
+
+		function notStrong(password) {
+			var full_string = password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/);
+			if (!full_string) {
+				alert("Your password is not strong enough!");
+				return true;
+			};
+			return false;
+		};
+		/**** STOP MODIFYING HERE. ****/
+	});
+</script>

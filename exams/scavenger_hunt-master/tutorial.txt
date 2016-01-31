@@ -1,0 +1,6 @@
+def testing
+  puts "It's going to be deleted."
+  puts "This is a test line."
+end
+
+puts testing

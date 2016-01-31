@@ -1,0 +1,71 @@
+<p>Change the appearance of the <code>&lt;div&gt;</code> elements such that: </p>
+<ol>
+	<li>Every alternative (odd) one has a light blue background instead of light yellow <br/><em>(5 points)</em></li>
+	<li>Hovering over any one of them will change the div's text colour to red and background colour to lightgray <br/><em>(5 points)</em></li>
+	<li>The hover change should happen smoothly, not instantly, over half a second <br/><em>(5 points)</em></li>
+</ol>
+<p>Edit the page source to begin.</p>
+
+<div class='question'>
+
+		<!-- YOU MAY MODIFY THE HTML BELOW -->
+
+				<div>
+					One
+				</div>
+				<div>
+					Two
+				</div>
+				<div>
+					Three
+				</div>
+				<div>
+					Four
+				</div>
+				<div>
+					Five
+				</div>
+				<div>
+					Six
+				</div>
+				<div>
+					Seven
+				</div>
+
+		<!-- STOP MODIFYING HERE. -->
+</div>
+
+<style>
+
+		/**** YOU MAY ADD OR MODIFY CSS BELOW ****/
+
+		.question div {
+			height: 30px;
+			width: 50%;
+			background-color: lightyellow;
+			padding: 20px;
+			margin: 5px;
+			border: 1px solid black;
+			text-align: center;
+			transition: all 1s linear;
+		}
+
+		.question div:nth-child(odd) {
+			background-color: lightblue;
+		}
+
+		.question div:hover {
+			color: red;
+			background-color: lightgray;
+		}
+
+		/**** STOP MODIFYING HERE. ****/
+</style>
+
+<script>
+	$(function() {
+		/**** YOU MAY MODIFY THE CODE BELOW. ****/
+
+		/**** STOP MODIFYING HERE. ****/
+	});
+</script>

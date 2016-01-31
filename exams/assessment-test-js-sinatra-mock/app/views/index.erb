@@ -1,0 +1,30 @@
+<h1>Javascript &amp; jQuery Assessment Test</h1>
+<div id="details">
+		<p>This test is meant to help gauge your current skill level with basic front-end programming (with JavaScript), as well as test your CSS skills.</p> 
+		<p>The test consists of 8 questions that total to 100 points.
+				Your aim should be to score 80 or higher.
+				Maximum score on this test is 100%.
+		</p>
+
+		<h2>Tips:</h2>
+		<ul>
+				<li>Use Chrome's DevTools (Console, etc)... It is your friend. </li>
+				<li>If you are struggling with a solution, move onto the next question</li>
+				<li>There are numerous "correct" ways of solving <em>any</em> coding problem. Feel free to use online resources to help you come up with solutions.</li>
+		</ul>
+
+		<h2>Rules:</h2>
+		<ul>
+				<li>Follow the guidelines in the code about what part of each file you can update.</li>
+				<li>Googling is allowed to help recall syntax, etc.</li>
+				<li>The teachers floating about can help explain questions but not help you solve your coding issues or questions</li>
+		</ul>
+
+		<h2>List of Questions</h2>
+		<p>8 questions; 100 points total:</p>
+		<ul>
+			<% @questions.each do |question| %>
+				<li><a href='/question/<%= question.id %>'>Question #<%= question.id %></a> (<%= question.points %> points)</li>
+			<% end %>
+		</ul>
+</div>

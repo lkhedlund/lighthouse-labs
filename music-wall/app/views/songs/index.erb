@@ -1,0 +1,50 @@
+<div class="row" id="navbar">
+  <div class="one-third column" style="text-align: center;">
+    <p>Logged in as <%= User.find(session['user']).email %></p>
+  </div>
+  <div class="one-third column" style="text-align: center;">
+    <h3><a href="/songs/new">Post a song</a></h3>
+  </div>
+  <div class="one-third column" style="text-align: center;">
+    <a href="/logout"><button class="button-primary">Sign out</button></a>
+  </div>
+</div>
+
+<div class="row" id="page_header">
+  <div class="one-third column">
+    <img src="images/punk_head.jpg" width="250px" height="300px">
+  </div>
+  <div class="two-thirds column" style="text-align: left; margin-top: 50px;">
+    <h1>Punk enough</h1>
+  </div>
+</div>
+
+<% @songs.each do |song| %>
+  <div class="row bottom_border" id="song_display">
+    <div class="one columns">
+      <h1><%= song.upvotes.count %></h1>
+    </div>
+    <div class="three columns">
+      <img src="<%= song.url %>" alt="default">
+    </div>
+
+    <div class="four columns">
+      <h3><%= song.title %></h3>
+      <p><em>by <%= song.artist %></em></p>
+    </div>
+
+    <div class="two columns">
+      <form method="POST" action="/votes">
+        <input type="hidden" name="song_id" value="<%= song.id %>" />
+        <% if song.upvotes.find_by(user_id: session['user']) %>
+          <button class="button-danger" type="submit" disabled>&#9760;</button>
+        <% else %>
+          <button type="submit">&#9760;</button>
+        <% end %>
+      </form>
+    </div>
+    <div class"three columns">
+      <h3><a href="songs/review?song_id=<%= song.id %>">Reviews</a></h3>
+    </div>
+  </div>
+<% end %>

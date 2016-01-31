@@ -1,0 +1,36 @@
+<h1>JavaScript, jQuery &amp; CSS Assessment</h1>
+<div id="details">
+  <p>This test will help gauge your current skill level of basic front-end programming (with JavaScript and jQuery) and styling (with CSS).</p> 
+  <p>
+    The test consists of <%= QUESTIONS.size %> questions that total to <%= total_points %> points.
+    Your aim should be to score 80 or higher.
+    There is also one bonus question worth 10 points, as part of question number 6.
+    The maximum score on this test is therefore <%= total_with_bonus %> points.
+  </p>
+
+  <h2>Rules:</h2>
+  <ul>
+    <li>Follow the guidelines in the code about what part of each file you can modify.</li>
+    <li>Googling is allowed to help recall syntax, etc.</li>
+    <li>The teachers floating about can help explain questions but not help you solve them.</li>
+  </ul>
+
+  <h2>Tips:</h2>
+  <ul>
+    <li>Use Chrome's DevTools (Console, etc)... It is your friend. </li>
+    <li>If you are struggling with a question, move onto the next.</li>
+    <li>There are numerous "correct" ways of solving <em>any</em> coding problem. Feel free to use online resources to help you come up with solutions.</li>
+  </ul>
+
+  <h2>List of Questions</h2>
+  <p><%= QUESTIONS.size %> questions; <%= total_with_bonus %> points total (<%= total_points %> + <%= bonus %> bonus):</p>
+  <ul>
+    <% QUESTIONS.each do |question| %>
+      <li>
+        <a href='/question/<%= question[:id] %>'>Question #<%= question[:id] %></a>
+        <%= question_points(question) %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+

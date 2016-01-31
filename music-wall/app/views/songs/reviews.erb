@@ -1,0 +1,66 @@
+<div class="row" id="navbar">
+  <div class="one-third column" style="text-align: center;">
+    <p>Logged in as <%= User.find(session['user']).email %></p>
+  </div>
+  <div class="one-third column" style="text-align: center;">
+    <h3><a href="/songs">Back</a></h3>
+  </div>
+  <div class="one-third column" style="text-align: center;">
+    <a href="/logout"><button class="button-primary">Sign out</button></a>
+  </div>
+</div>
+<div class="row bottom_border" id="song_display">
+  <div class="one columns">
+    <h1><%= @song.upvotes.count %></h1>
+  </div>
+  <div class="three columns">
+    <img src="<%= @song.url %>" alt="default">
+  </div>
+
+  <div class="four columns">
+    <h3><%= @song.title %></h3>
+    <p><em>by <%= @song.artist %></em></p>
+  </div>
+
+  <div class="three columns">
+    <%= @rating %> &#9760; out of 4 &#9760;</p>
+  </div>
+</div>
+<form method="post" action="/review">
+  <input type="hidden" name="song_id" value="<%= @song.id %>">
+  <label for="exampleMessage">Review</label>
+  <textarea class="u-full-width" name="content"></textarea>
+  <div class="row bottom_border">
+    <div class="six columns">
+      <label for="exampleRecipientInput">Rating</label>
+      <select class="u-full-width" name="rating">
+        <option value="1">&#9760;</option>
+        <option value="2">&#9760; &#9760;</option>
+        <option value="3">&#9760; &#9760; &#9760;</option>
+        <option value="4">&#9760; &#9760; &#9760; &#9760;</option>
+      </select>
+    </div>
+    <div class="six columns">
+      <input class="button-primary u-pull-right" type="submit" value="Submit">
+    </div>
+  </div>
+</form>
+<% @reviews.each do |review| %>
+  <div class="u-full-width">
+    <p><%= review.content %></p>
+  </div>
+  <div class="row bottom_border">
+    <div class="four columns">
+      Posted by <%= User.find(review.user_id).email %>
+    </div>
+    <div class="four columns">
+      <%= review.rating %> &#9760;
+    </div>
+    <div class="four columns">
+      <form method="post" action='/delete-review'>
+        <input type="hidden" name="review_id" value="<%= review.id %>">
+        <input class="button-danger u-pull-right" type="submit" value="delete">
+      </form>
+    </div>
+  </div>
+<% end %>
